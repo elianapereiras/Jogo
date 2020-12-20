@@ -24,62 +24,31 @@ function criarcobrinha(){
 	}
 }
 
-function drawFood(){
-	context.fillStyle="red";
-	context.fillRect(food.x, food.y, box, box);
-}
 
-document.addEventListener('Keydown', update);
-
-function update(event){
-		if(event.KeyCode ==37 && direction != "right")direction ="left";
-		if(event.KeyCode ==38 && direction != "down")direction ="up";
-		if(event.KeyCode ==39 && direction != "left")direction ="right";
-		if(event.KeyCode ==40 && direction != "up")direction ="down";
-}
 
 function iniciarJogo(){
-	
-	/* criar a direção da cobrinha */
-	if(snake[0].x > 15 * box && direction == "right") snake[0].x=0;
-	if(snake[0].x < 0 && direction == "left") snake[0].x= 16 * box;
-	if(snake[0].y > 15 * box && direction == "down") snake[0].y=0;
-	if(snake[0].y < 0 && direction == "up") snake[0].y=16 * box;
-	
-	for(i=0; i< snake.length; i++){
-		if(snake[0].x == snake[i].x && snake[0].y== snake[i].y){
-			clearInterval(jogo); /* parar a função jogo*/
-			alert('Game Over :(');
-		}
-	}
-	
 	criarBG();
 	criarcobrinha();
-	drawFood();
 	
+	/*definindo o ponto de partida da cobrinha*/
 	let snakeX= snake[0].x;
 	let snakeY= snake[0].y;
 	
+	/* definindo as coordenadas */
 	if(direction == "right") snakeX += box;
-	if(direction == "rleft") snakeX -= box;
-	if(direction == "up") snakeY -= box;
-	if(direction == "down") snakeY += box;
+	if(direction == "left") snakeX -= box;/*diminui p dar a ilusão q foi p a esquerda*/
+	if(direction == "up")    snakeY -= box;
+	if(direction == "down")  snakeY += box;
 	
-	if (snakeX != food.x || snakeY != food.y){
-		snake.pop();
-	}
-	else{ food.x = Math.floor(Math.random() * 15 + 1) * box;
-		  food.y = Math.floor(Math.random() * 15 + 1) * box; 
-	}
-	snake.pop();/*remove o último elemento do array*/
+	snake.pop();/*remove o último elemento do array
 	
+	/*definindo a cabeça da cobrinha*/
 	let newHead= {
 		x: snakeX,
 		y: snakeY
 	}
+	
 	snake.unshift(newHead);
 }
 
-let jogo = setInterval(iniciarJogo,100); /* tempo em milesegundo*/
-
-
+let jogo = setInterval(iniciarJogo,100);  /*tempo em milesegundo*/
