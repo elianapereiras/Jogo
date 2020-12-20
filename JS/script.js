@@ -84,7 +84,6 @@ function iniciarJogo(){
 	
 	snake.unshift(newHead); /*até aqui a cobrinha aparece mas qdo chega no final da tela desaparece*/
 	
-	/* capturar o code da tecla*/
 	
 }
 
