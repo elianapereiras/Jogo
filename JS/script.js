@@ -88,3 +88,5 @@ function iniciarJogo(){
 }
 
 let jogo = setInterval(iniciarJogo,100);  /*tempo em milesegundo para o jogo reiniciar*/
+
+/* fim */
