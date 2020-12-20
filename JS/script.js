@@ -24,23 +24,44 @@ function criarcobrinha(){
 	}
 }
 
+function drawFood(){
+	context.fillStyle="red";
+	context.fillRect(food.x, food.y, box, box);
+}
+
+document.addEventListener('keydown', update);/*esse evento pega o Keydown e chama a função update*/
+
+function update(event){
+		if(event.keyCode ==37 && direction != "right")direction ="left";
+		if(event.keyCode ==38 && direction != "down")direction ="up";
+		if(event.keyCode ==39 && direction != "left")direction ="right";
+		if(event.keyCode ==40 && direction != "up")direction ="down";
+}
 
 
 function iniciarJogo(){
+	/* os if´s abaixo tem por função fazer a cobrinha "atravessar" a tela*/
+	if(snake[0].x > 15 * box && direction == "right") snake[0].x=0;
+	if(snake[0].x < 0 && direction == "left") snake[0].x= 16 * box;
+	if(snake[0].y > 15 * box && direction == "down") snake[0].y=0;
+	if(snake[0].y < 0 && direction == "up") snake[0].y=16 * box;
+	
 	criarBG();
 	criarcobrinha();
+	drawFood();
 	
+			
 	/*definindo o ponto de partida da cobrinha*/
 	let snakeX= snake[0].x;
 	let snakeY= snake[0].y;
 	
 	/* definindo as coordenadas */
 	if(direction == "right") snakeX += box;
-	if(direction == "left") snakeX -= box;/*diminui p dar a ilusão q foi p a esquerda*/
+	if(direction == "left")  snakeX -= box;/*diminui p dar a ilusão q foi p a esquerda*/
 	if(direction == "up")    snakeY -= box;
 	if(direction == "down")  snakeY += box;
 	
-	snake.pop();/*remove o último elemento do array
+	snake.pop();/*remove o último elemento do array*/
 	
 	/*definindo a cabeça da cobrinha*/
 	let newHead= {
@@ -48,7 +69,10 @@ function iniciarJogo(){
 		y: snakeY
 	}
 	
-	snake.unshift(newHead);
+	snake.unshift(newHead); /*até aqui a cobrinha aparece mas qdo chega no final da tela desaparece*/
+	
+	/* capturar o code da tecla*/
+	
 }
 
-let jogo = setInterval(iniciarJogo,100);  /*tempo em milesegundo*/
+let jogo = setInterval(iniciarJogo,100);  /*tempo em milesegundo para o jogo reiniciar*/
