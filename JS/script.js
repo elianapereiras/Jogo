@@ -29,6 +29,7 @@ function drawFood(){
 	context.fillRect(food.x, food.y, box, box);
 }
 
+
 document.addEventListener('keydown', update);/*esse evento pega o Keydown e chama a função update*/
 
 function update(event){
@@ -46,6 +47,13 @@ function iniciarJogo(){
 	if(snake[0].y > 15 * box && direction == "down") snake[0].y=0;
 	if(snake[0].y < 0 && direction == "up") snake[0].y=16 * box;
 	
+	 /*se a posição 0 (cabeça) se chocar com a posição 1 (corpo) parar o jogo*/
+	for(i=1; i < snake.length; i++){
+		if(snake[0].x == snake[i].x && snake[0].y== snake[i].y){
+			clearInterval(jogo);
+			alert('Game Over :(');
+		}
+	}
 	criarBG();
 	criarcobrinha();
 	drawFood();
@@ -61,7 +69,12 @@ function iniciarJogo(){
 	if(direction == "up")    snakeY -= box;
 	if(direction == "down")  snakeY += box;
 	
-	snake.pop();/*remove o último elemento do array*/
+	/*aumentar o tamanho da cobrinha qdo ela comer a comida*/
+	if (snakeX != food.x || snakeY != food.y){
+			snake.pop();/*remove o último elemento do array*/
+	}else{food.x = Math.floor(Math.random() * 15 + 1) * box;
+		 food.y = Math.floor(Math.random() * 15 + 1) * box; 
+	}
 	
 	/*definindo a cabeça da cobrinha*/
 	let newHead= {
